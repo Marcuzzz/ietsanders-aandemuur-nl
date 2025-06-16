@@ -41,8 +41,8 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
 
   if (images.length === 0) {
     return (
-      <div className="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center">
-        <span className="text-gray-500">Geen afbeeldingen beschikbaar</span>
+      <div className="w-full h-96 bg-gray-50 flex items-center justify-center border border-gray-100">
+        <span className="text-gray-400 font-light">Geen afbeeldingen beschikbaar</span>
       </div>
     );
   }
@@ -50,15 +50,13 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
   return (
     <div className="relative w-full">
       {/* Main Image Container */}
-      <div className="relative w-full h-96 lg:h-[500px] rounded-lg overflow-hidden shadow-2xl">
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent z-10"></div>
-        
+      <div className="relative w-full h-96 lg:h-[500px] overflow-hidden shadow-lg border border-gray-100">
         {images.map((image, index) => (
           <img
             key={index}
             src={image}
             alt={`Artwork ${index + 1}`}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
               index === currentIndex && !isTransitioning 
                 ? 'opacity-100' 
                 : 'opacity-0'
@@ -67,22 +65,22 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
         ))}
         
         {/* Image Counter */}
-        <div className="absolute top-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm z-20">
+        <div className="absolute top-4 right-4 bg-white/90 text-gray-700 px-3 py-1 text-sm font-light border border-gray-200">
           {currentIndex + 1} / {images.length}
         </div>
       </div>
 
       {/* Dots Navigation */}
       {images.length > 1 && (
-        <div className="flex justify-center mt-6 space-x-2">
+        <div className="flex justify-center mt-8 space-x-3">
           {images.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-200 ${
+              className={`h-2 transition-all duration-300 ${
                 index === currentIndex
                   ? 'bg-amber-700 w-8'
-                  : 'bg-gray-300 hover:bg-gray-400'
+                  : 'bg-gray-300 hover:bg-gray-400 w-2'
               }`}
               aria-label={`Ga naar afbeelding ${index + 1}`}
             />
@@ -92,15 +90,15 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
 
       {/* Thumbnail Navigation for larger screens */}
       {images.length > 1 && (
-        <div className="hidden lg:grid grid-cols-3 gap-4 mt-6">
+        <div className="hidden lg:grid grid-cols-3 gap-6 mt-8">
           {images.map((image, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`relative w-full h-24 rounded-lg overflow-hidden transition-all duration-200 ${
+              className={`relative w-full h-24 overflow-hidden transition-all duration-300 border ${
                 index === currentIndex
-                  ? 'ring-4 ring-amber-700 scale-105'
-                  : 'hover:scale-102 hover:ring-2 hover:ring-amber-400'
+                  ? 'border-amber-700 border-2 opacity-100'
+                  : 'border-gray-200 hover:border-amber-400 opacity-75 hover:opacity-100'
               }`}
             >
               <img
@@ -108,9 +106,6 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
                 alt={`Thumbnail ${index + 1}`}
                 className="w-full h-full object-cover"
               />
-              <div className={`absolute inset-0 transition-opacity duration-200 ${
-                index === currentIndex ? 'bg-amber-700/20' : 'bg-black/20'
-              }`}></div>
             </button>
           ))}
         </div>
